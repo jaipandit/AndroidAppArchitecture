@@ -13,5 +13,5 @@ interface UserDao {
     fun insert(user: User)
 
     @Query("SELECT * from user WHERE id = :userId")
-    fun get(userId: Int): LiveData<User>
+    fun get(userId: String): LiveData<User>
 }

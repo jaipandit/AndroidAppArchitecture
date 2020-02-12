@@ -4,6 +4,7 @@ import android.app.Application
 import jai.sample.androidapparchitecture.di.AppComponent
 import jai.sample.androidapparchitecture.di.AppModule
 import jai.sample.androidapparchitecture.di.DaggerAppComponent
+import jai.sample.androidapparchitecture.di.DataModule
 
 class SampleApplication : Application() {
 
@@ -11,6 +12,7 @@ class SampleApplication : Application() {
         DaggerAppComponent
                 .builder()
                 .appModule(AppModule(this))
+                .dataModule(DataModule(this))
                 .build()
     }
 

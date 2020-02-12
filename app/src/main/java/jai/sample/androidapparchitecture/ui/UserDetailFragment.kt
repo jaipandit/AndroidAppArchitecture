@@ -1,10 +1,12 @@
 package jai.sample.androidapparchitecture.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import jai.sample.androidapparchitecture.R
@@ -17,10 +19,10 @@ class UserDetailFragment : Fragment() {
     companion object {
         private const val KEY_USER_ID = "user_id"
 
-        fun instance(userId: Int): UserDetailFragment {
+        fun instance(userId: String): UserDetailFragment {
             val userDetailFragment = UserDetailFragment()
             val bundle = Bundle()
-            bundle.putInt(KEY_USER_ID, userId)
+            bundle.putString(KEY_USER_ID, userId)
             userDetailFragment.arguments = bundle
             return userDetailFragment
         }
@@ -29,12 +31,21 @@ class UserDetailFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var viewModel: UserProfileViewModel
+    val viewModel: UserProfileViewModel by viewModels { viewModelFactory }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity!!.application as SampleApplication).getDependencyInjector().inject(this)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // ViewModelProvider(viewModelFactory)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        ((activity!!.application) as SampleApplication).getDependencyInjector().inject(this)
-        viewModel.userId = arguments?.getInt(KEY_USER_ID)!!
+        viewModel.userId = arguments?.getString(KEY_USER_ID)!!
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
