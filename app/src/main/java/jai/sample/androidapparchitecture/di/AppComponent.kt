@@ -2,6 +2,7 @@ package jai.sample.androidapparchitecture.di
 
 import dagger.Component
 import jai.sample.androidapparchitecture.ui.UserDetailFragment
+import jai.sample.androidapparchitecture.ui.UserListFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -9,4 +10,5 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun inject(userDetailFragment: UserDetailFragment)
+    fun inject(userListFragment: UserListFragment)
 }

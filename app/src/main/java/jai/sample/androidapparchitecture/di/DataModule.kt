@@ -2,23 +2,30 @@ package jai.sample.androidapparchitecture.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import dagger.Module
 import dagger.Provides
-import jai.sample.androidapparchitecture.cloud.RetrofitWebService
+import jai.sample.androidapparchitecture.cloud.UserWebService
 import jai.sample.androidapparchitecture.data.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class DataModule(application: Application) {
-
-    private val onDeviceCache: OnDeviceCache = Room.databaseBuilder(application, OnDeviceCache::class.java, "demo-db").build()
+class DataModule(private val application: Application) {
 
     @Provides
     @Singleton
     fun getOnDeviceCache(): OnDeviceCache {
-        return onDeviceCache
+        return Room.databaseBuilder(application, OnDeviceCache::class.java, "demo-db").build()
     }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit() : Retrofit =
+            Retrofit.Builder()
+                    .baseUrl("https://jsonplaceholder.typicode.com")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
 
     @Provides
     @Singleton
@@ -34,7 +41,10 @@ class DataModule(application: Application) {
 
     @Provides
     @Singleton
-    fun provideUserWebService(retrofitWebService: RetrofitWebService): WebService {
-        return retrofitWebService
+    fun provideUserWebService(userWebService: UserWebService): WebService {
+        return userWebService
     }
+
+
+
 }

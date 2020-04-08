@@ -8,12 +8,16 @@ import javax.inject.Provider
 import javax.inject.Singleton
 import kotlin.reflect.KClass
 
+
+/**
+ * Map, value is Provider<ViewModel> so that it doesnt create the objects.
+ */
 @Singleton
 class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>)
     : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return viewModels[modelClass] as T
+        return viewModels[modelClass]?.get() as T
     }
 }
 

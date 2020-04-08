@@ -8,5 +8,5 @@ import javax.inject.Inject
 
 class UserProfileViewModel @Inject constructor(userRepository: UserRepository) : ViewModel() {
     var userId: String = "-1"
-    val userLiveData: LiveData<User> = userRepository.getUser(userId)
+    val userLiveData: LiveData<List<User>> = userRepository.getUsers()
 }

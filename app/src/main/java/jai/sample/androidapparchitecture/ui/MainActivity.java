@@ -15,12 +15,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UserDetailFragment userDetailFragment;
         if (savedInstanceState == null) {
-            userDetailFragment = new UserDetailFragment();
+            UserListFragment userListFragment = new UserListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, userDetailFragment, userDetailFragmentTag)
+                    .replace(R.id.fragment_container, userListFragment, userDetailFragmentTag)
                     .commitNow();
         }
     }
